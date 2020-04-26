@@ -1,0 +1,13 @@
+#!/bin/sh
+
+choice=$(echo -e "\
+terminal
+files
+browser\
+" | dmenu -l 10)
+
+case $choice in
+	terminal)	$TERMINAL;;
+	files)		$TERMINAL -e $FILE1;;
+	browser)		$BROWSER;;
+esac
