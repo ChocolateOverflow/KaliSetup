@@ -10,10 +10,12 @@ htop
 libxft-dev
 libxinerama-dev
 libx11-dev
+libxfixes-dev
 locate
 make
 mdk3
 mdk4
+network-manager
 npm
 openssl
 perl
@@ -26,6 +28,8 @@ sleuthkit
 sxhkd
 tor
 unclutter
+vifm
 xclip
 xdo
 xorg
+xsel

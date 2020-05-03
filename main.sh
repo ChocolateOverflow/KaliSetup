@@ -120,14 +120,14 @@ post_install(){
 
 echo -e "Running install and setup\n"
 
-#pre_install
-#install_pkg
-#install_python
+pre_install
+install_pkg
+install_python
 install_gitmake
-#install_manual
-#copy_dotfiles
-#cron
-#setup
-#post_install
+install_manual
+copy_dotfiles
+cron
+setup
+post_install
 
 echo -e "Done with everything!\n"
