@@ -26,6 +26,8 @@ pre_install(){
 install_pkg(){
 	echo -e "[START] Installing with standard package manager\n"
 
+	sudo apt update
+	sudo apt upgrade
 
 	echo -e "Installing main tools\n"
 	sudo apt install -y $(cat $path_to_pkgs/main.txt | tr '\n' ' ')
@@ -90,7 +92,6 @@ cron(){
 setup(){
 	echo -e "[START] Setting up tools\n"
 
-	# Loop through /setup and run every script
 	for dir in ./setup/*; do
 		sh $dir/setup.sh
 	done
