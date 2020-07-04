@@ -63,7 +63,7 @@ install_manual(){
 
 	# Loop through /manual_install and run every script
 	for dir in ./manual_install/*; do
-		sh $dir/install.sh
+		bash $dir/install.sh
 	done
 
 	echo -e "[START] Installing some tools semi-manually\n"
@@ -91,7 +91,7 @@ setup(){
 	echo -e "[START] Setting up tools\n"
 
 	for dir in ./setup/*; do
-		sh $dir/setup.sh
+		bash $dir/setup.sh
 	done
 
 	echo -e "[DONE] Setting up tools\n"
