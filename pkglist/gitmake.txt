@@ -1,4 +1,3 @@
-https://github.com/ChocolateOverflow/st
 https://github.com/ChocolateOverflow/dmenu
 https://github.com/cdown/clipnotify
 https://github.com/cdown/clipmenu

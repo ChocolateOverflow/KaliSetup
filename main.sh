@@ -38,7 +38,7 @@ install_pkg(){
 install_python(){
 	echo -e "[START] Installing python modules\n"
 
-	pip3 install -r $path_to_pkgs/python.txt --user
+	pip3 install -r $path_to_pkgs/python.txt
 
 	echo -e "[DONE] Installing python modules\n"
 }
@@ -69,24 +69,22 @@ install_manual(){
 	echo -e "[START] Installing some tools semi-manually\n"
 }
 
-copy_dotfiles(){
-	echo -e "[START] Copying dot files\n"
+dotfiles(){
+	echo -e "[START] Installing dot files\n"
 
-	cp -r ./dotfiles/home/* $HOME 2>/dev/null
-	cp -r ./dotfiles/home/.* $HOME 2>/dev/null
-	cp -r ./dotfiles/config/* $HOME/.config 2>/dev/null
-	cp -r ./dotfiles/config/.* $HOME/.config 2>/dev/null
+	git clone $url_to_dotfiles $path_to_dotfiles
 
-	echo -e "[DONE] Copying dot files\n"
-}
+	for line in $path_to_dotfiles/home/.*; do
+		target=$(echo $line | cut -d \/ -f 7)
+		[ $target != "." ] && [ $target != ".." ] && ln -sf $line $HOME/$target
+	done
 
-cron(){
-	echo -e "[START] Copying cron jobs\n"
+	for line in $path_to_dotfiles/config/*; do
+		target=$(echo $line | cut -d \/ -f 7)
+		ln -sf $line $HOME/.config/$target
+	done
 
-#	cp ./cron/user/* $path_to_cron_user
-#	cp ./cron/root/* $path_to_cron_root
-
-	echo -e "[DONE] Copying cron jobs\n"
+	echo -e "[DONE] Installing dot files\n"
 }
 
 setup(){
@@ -126,8 +124,7 @@ install_pkg
 install_python
 install_gitmake
 install_manual
-copy_dotfiles
-cron
+dotfiles
 setup
 post_install
 
