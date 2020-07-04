@@ -119,13 +119,13 @@ post_install(){
 
 echo -e "Running install and setup\n"
 
-pre_install
-install_pkg
-install_python
-install_gitmake
-install_manual
-dotfiles
-setup
-post_install
+pre_install || echo "Failed at pre_install()"
+install_pkg || echo "Failed at install_pkg()"
+install_python || echo "Failed at install_python()"
+install_gitmake || echo "Failed at install_gitmake()"
+install_manual || echo "Failed at install_manual()"
+dotfiles || echo "Failed at dotfiles()"
+setup || echo "Failed at setup()"
+post_install || echo "Failed at post_install()"
 
 echo -e "Done with everything!\n"
