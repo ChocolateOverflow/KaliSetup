@@ -43,27 +43,14 @@ install_python(){
 	echo -e "[DONE] Installing python modules\n"
 }
 
-install_gitmake(){
-	echo -e "[START] Installing stuff from github with make\n"
-
-	while IFS= read -r line; do
-		tmp=$(cat $line | rev | cut -d "/" -f 1 | rev)
-		git clone $line "$path_to_tools/$tmp"
-		cd "$path_to_tools/$tmp"
-		make
-		sudo make install
-	done < $path_to_pkgs/gitmake.txt
-	cd $path_current
-
-	echo -e "[DONE] Installing stuff from github with make\n"
-}
-
 install_manual(){
 	echo -e "[START] Installing some tools semi-manually\n"
 
 	# Loop through /manual_install and run every script
 	for dir in ./manual_install/*; do
+		cd $dir
 		bash $dir/install.sh
+		cd $path_current
 	done
 
 	echo -e "[START] Installing some tools semi-manually\n"
@@ -91,7 +78,9 @@ setup(){
 	echo -e "[START] Setting up tools\n"
 
 	for dir in ./setup/*; do
-		bash $dir/setup.sh
+		cd $dir
+		bash setup.sh
+		cd $path_current
 	done
 
 	echo -e "[DONE] Setting up tools\n"
@@ -101,12 +90,10 @@ post_install(){
 	echo -e "[START] Post-installtion\n"
 
 	cp ./.custom $HOME
-	chmod +x $HOME/.custom/scripts/*
+	chmod +x $HOME/.custom/scripts/* $HOME/.custom/scripts/*/*
 
 	echo "updatedb"
 	sudo updatedb
-
-	chmod +x $HOME/.config/bspwm/bspwmrc
 
 	echo -e "[DONE] Post-installtion\n"
 }
@@ -119,13 +106,12 @@ post_install(){
 
 echo -e "Running install and setup\n"
 
-pre_install || echo "Failed at pre_install()"
-install_pkg || echo "Failed at install_pkg()"
-install_python || echo "Failed at install_python()"
-install_gitmake || echo "Failed at install_gitmake()"
-install_manual || echo "Failed at install_manual()"
-dotfiles || echo "Failed at dotfiles()"
-setup || echo "Failed at setup()"
-post_install || echo "Failed at post_install()"
+pre_install
+install_pkg
+install_python
+install_manual
+dotfiles
+setup
+post_install
 
 echo -e "Done with everything!\n"

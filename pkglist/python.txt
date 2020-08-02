@@ -1,6 +1,5 @@
-Cython
-matplotlib
 numpy
+pwntools
 requests
 scapy
 scipy

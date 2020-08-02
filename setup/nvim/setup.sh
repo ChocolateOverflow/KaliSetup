@@ -1,14 +1,14 @@
 #!/usr/bin/bash
 
 set -e
-source var.sh
+source ../../var.sh
 
 echo -e "[START] Installing and setting up stuff for Vim\n"
 
 mkdir -p $path_to_vim/autoload $path_to_vim/plugged
 
 # Install stuff with package manager
-sudo pacman -S --needed --noconfirm vim-runtime
+sudo apt install neovim-runtime
 
 # Install vim-plug
 curl "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" > $path_to_vim/autoload/plug.vim
@@ -17,16 +17,16 @@ curl "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" > $pa
 python3 -m pip install black pynvim
 
 # Install all the plugins
-vim --cmd ":source $path_to_vim/init.vim" \
+vim --cmd ":source $HOME/.config/nvim/init.vim" \
 	-c ":PlugInstall" \
 	-c ":qa!" 2>/dev/null
 
 # vim-jsbeautify
-cp ./.editorconfig $path_to_vim/
+cp ./.editorconfig $HOME/.config/nvim/
 
 # sym-link vim to nvim
-ln -s $HOME/.config/nvim/init.vim $HOME/.vimrc
-ln -s $HOME/.config/nvim/ $HOME/.vim
-sudo ln -s /usr/bin/nvim /usr/bin/vim
+ln -sf $HOME/.config/nvim/init.vim $HOME/.vimrc
+ln -sf $HOME/.config/nvim/ $HOME/.vim
+sudo ln -sf /usr/bin/nvim /usr/bin/vim
 
 echo -e "[DONE] Installing and setting up stuff for Vim\n"
